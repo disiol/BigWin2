@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/back1"
+    tools:context=".MainActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_text"
+                android:padding="20dp"
+                android:text="@string/_1000"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/select_your_bet"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/bet_1000_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/_1000" />
+
+            <Button
+                android:id="@+id/bet_100_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/_100" />
+
+            <Button
+                android:id="@+id/bet_200_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/_200" />
+
+            <Button
+                android:id="@+id/bet_50_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_50" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_bar"
+            android:layout_width="357dp"
+            android:layout_height="336dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/sm1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="57dp"
+                android:orientation="horizontal">
+
+                <com.mdz.bigwin.ImageViewScrolling.ImageViewScrolling
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.mdz.bigwin.ImageViewScrolling.ImageViewScrolling
+                    android:id="@+id/image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.mdz.bigwin.ImageViewScrolling.ImageViewScrolling
+                    android:id="@+id/image3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/btn_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/frame_bar"
+            android:layout_toRightOf="@+id/frame_bar"
+            android:src="@drawable/hand" />
+
+        <ImageView
+            android:id="@+id/btn_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/frame_bar"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="-210dp"
+            android:layout_toEndOf="@+id/frame_bar"
+            android:src="@drawable/hand2"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
