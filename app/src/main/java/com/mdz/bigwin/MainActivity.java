@@ -18,7 +18,6 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements IEventEnd {
 
     public static final int START_MONEY = 1000;
-    ImageView btn_up, btn_down;
     ImageViewScrolling image, image2, image3;
     TextView txt_score;
     int count_done = 0;
@@ -32,8 +31,6 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
         setContentView(R.layout.activity_main);
         money = START_MONEY;
 
-        btn_up = findViewById(R.id.btn_up);
-        btn_down = findViewById(R.id.btn_down);
 
         bet50Button = findViewById(R.id.bet_50_button);
         bet100Button = findViewById(R.id.bet_100_button);
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
 
         txt_score.setText(String.valueOf(money));
 
-        btn_up.setOnClickListener(v -> sratSlot(50, true));
 
         bet50Button.setOnClickListener(v -> {
             sratSlot(50, true);
@@ -71,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
 
     private void sratSlot(int beat, boolean flag) {
         if (money >= minBet && flag) {
-            btn_up.setVisibility(View.GONE);
-            btn_down.setVisibility(View.VISIBLE);
+
 
             image.setValueRandom(new Random().nextInt(6),
                     new Random().nextInt((15 - 5) + 1) + 5);
@@ -93,8 +88,7 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
         if (count_done < 2) {
             count_done++;
         } else {
-            btn_down.setVisibility(View.GONE);
-            btn_up.setVisibility(View.VISIBLE);
+
 
             count_done = 0;
             if (image.getValue() == image2.getValue() &&
@@ -110,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
                 txt_score.setText(String.valueOf(money));
             } else {
                 showMessage("You lose");
-                sratSlot(money,false);
+
             }
         }
     }
@@ -138,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false).setPositiveButton("Ok", (dialog, id) -> {
+            sratSlot(money,false);
             dialog.cancel();
         });
 
