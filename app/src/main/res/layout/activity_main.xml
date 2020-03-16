@@ -115,7 +115,7 @@
             android:layout_marginTop="-210dp"
             android:layout_toEndOf="@+id/frame_bar"
             android:src="@drawable/hand2"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

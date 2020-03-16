@@ -1,13 +1,14 @@
 package com.mdz.bigwin;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mdz.bigwin.ImageViewScrolling.IEventEnd;
 import com.mdz.bigwin.ImageViewScrolling.ImageViewScrolling;
@@ -16,19 +17,20 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements IEventEnd {
 
+    public static final int START_MONEY = 1000;
     ImageView btn_up, btn_down;
     ImageViewScrolling image, image2, image3;
     TextView txt_score;
     int count_done = 0;
-    int money = 1000;
-    int beat;
-    private Button bet50Button, bet100Button,bet200Button, bet1000Button;
+    int money;
+    private Button bet50Button, bet100Button, bet200Button, bet1000Button;
+    private int minBet = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        money = START_MONEY;
 
         btn_up = findViewById(R.id.btn_up);
         btn_down = findViewById(R.id.btn_down);
@@ -50,25 +52,25 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
 
         txt_score.setText(String.valueOf(money));
 
-        btn_up.setOnClickListener(v -> sratSlot(50));
+        btn_up.setOnClickListener(v -> sratSlot(50, true));
 
         bet50Button.setOnClickListener(v -> {
-            sratSlot(50);
+            sratSlot(50, true);
         });
         bet100Button.setOnClickListener(v -> {
-            sratSlot(100);
+            sratSlot(100, true);
         });
         bet200Button.setOnClickListener(v -> {
-            sratSlot(200);
+            sratSlot(200, true);
         });
         bet1000Button.setOnClickListener(v -> {
-            sratSlot(1000);
+            sratSlot(1000, true);
         });
 
     }
 
-    private void sratSlot(int beat) {
-        if (money >= 50) {
+    private void sratSlot(int beat, boolean flag) {
+        if (money >= minBet && flag) {
             btn_up.setVisibility(View.GONE);
             btn_down.setVisibility(View.VISIBLE);
 
@@ -81,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
 
             money -= beat;
             txt_score.setText(String.valueOf(money));
-        } else {
-            Toast.makeText(MainActivity.this, "You have not enough money. You can restart the game.", Toast.LENGTH_SHORT).show();
+        } else if (money < minBet) {
+            showMessageEndGame("You have not enough money. You can restart the game.");
         }
     }
 
@@ -97,19 +99,55 @@ public class MainActivity extends AppCompatActivity implements IEventEnd {
             count_done = 0;
             if (image.getValue() == image2.getValue() &&
                     image2.getValue() == image3.getValue()) {
-                Toast.makeText(this, "You won 300!", Toast.LENGTH_SHORT).show();
+                showMessage("You won 300!");
                 money += 300;
                 txt_score.setText(String.valueOf(money));
             } else if (image.getValue() == image2.getValue() ||
                     image2.getValue() == image3.getValue() ||
                     image.getValue() == image3.getValue()) {
-                Toast.makeText(this, "You won 100!", Toast.LENGTH_SHORT).show();
+                showMessage("You won 100!");
                 money += 100;
                 txt_score.setText(String.valueOf(money));
             } else {
-                Toast.makeText(this, "You lose", Toast.LENGTH_SHORT).show();
+                showMessage("You lose");
+                sratSlot(money,false);
             }
         }
     }
 
+    public void showMessageEndGame(String message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false).setPositiveButton(R.string.new_game, (dialog, id) -> {
+            NewGame();
+            dialog.cancel();
+        })
+                .setNegativeButton(R.string.exit,
+                        (dialog, id) -> {
+                          finish();
+                            dialog.cancel();
+                        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void showMessage(String message) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false).setPositiveButton("Ok", (dialog, id) -> {
+            dialog.cancel();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void NewGame() {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 }
